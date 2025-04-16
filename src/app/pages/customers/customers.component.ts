@@ -13,16 +13,16 @@ import { TEMPLATES } from '../../constants/constants';
 })
 export class CustomersComponent implements OnInit {
   private httpService = inject(HttpService);
-  columns: string[] = ['Nombre', 'Nit', 'Correo', 'Telefono'];
+  columns: string[] = ['Nombre', 'Fecha de Nacimiento', 'Correo', 'Telefono'];
   clientes: any[] = [];
 
   ngOnInit(): void {
     this.httpService.getItems(TEMPLATES.CUSTOMERS).then(response => {
       this.clientes = response.data.map((p: any) => ({
         nombre: p.nombre,
-        precio: p.nif,
-        categoria: p.email,
-        cantidad: p.telefono
+        fecha_nacimiento: p.fecha_nacimiento,
+        email: p.email,
+        telefono: p.telefono
       }));
     }).catch(error => {
       console.error('Error al cargar productos desde Totalum:', error);
