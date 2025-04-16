@@ -12,7 +12,7 @@
         <tbody>
             <tr *ngFor="let item of pagedAndFilteredData">
                 <td *ngFor="let key of objectKeys(item)">
-                    <ng-container *ngIf="key === 'precio'; else otherFields">
+                    <ng-container *ngIf="key === 'precio' || key == 'importe' || key == 'importe_impuesto'; else otherFields">
                         {{ item[key] | currency:'EUR':'':'1.2-2' }} €
                     </ng-container>
                     <ng-template #otherFields>{{ item[key] }}</ng-template>

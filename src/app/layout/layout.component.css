@@ -13,3 +13,8 @@ aside {
     list-style: none;
     padding: 0;
 }
+
+.btn-primary {
+    margin-bottom: 15px;
+    width: 150px;
+}
