@@ -1,30 +1,38 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Producto } from '../../interfaces/product.interface';
+import { ProductsService } from '../../services/products/products.service';
 
 @Component({
   selector: 'app-product-table',
   standalone: true,
   imports: [CommonModule, FormsModule],
+  providers: [ProductsService],
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.css']
 })
+export class ProductTableComponent implements OnInit {
+  private productsService = inject(ProductsService);
 
-export class ProductTableComponent {
-  productos: Producto[] = [
-    { nombre: 'Manzana', precio: 0.50, categoria: 'Frutas', cantidad: 5 },
-    { nombre: 'Pera', precio: 0.60, categoria: 'Frutas', cantidad: 10 },
-    { nombre: 'Pan', precio: 1.20, categoria: 'Panadería', cantidad: 20 },
-    { nombre: 'Leche', precio: 1.00, categoria: 'Lácteos', cantidad: 15 },
-    { nombre: 'Queso', precio: 2.50, categoria: 'Lácteos', cantidad: 8 },
-    { nombre: 'Yogur', precio: 1.10, categoria: 'Lácteos', cantidad: 12 },
-    { nombre: 'Banano', precio: 0.30, categoria: 'Frutas', cantidad: 18 },
-  ];
-
+  productos: Producto[] = [];
   searchTerm: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 5;
+
+  ngOnInit(): void {
+    this.productsService.getItems().then(response => {
+      this.productos = response.data.map((p: any) => ({
+        nombre: p.nombre,
+        precio: p.preciounidad,
+        categoria: p.categoria,
+        cantidad: p.cantidad
+      }));
+    }).catch(error => {
+      console.error('Error al cargar productos desde Totalum:', error);
+    });
+
+  }
 
   get filteredProductos() {
     const filtrados = this.productos.filter(p =>
