@@ -13,9 +13,9 @@ import { TEMPLATES } from '../../constants/constants';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductTableComponent implements OnInit {
+export class ProductComponent implements OnInit {
   private httpService = inject(HttpService);
-  columns: string[]  = ['Nombre', 'Precio', 'Categoría', 'Cantidad'];
+  columns: string[] = ['Nombre', 'Precio', 'Categoría', 'Cantidad'];
   productos: Producto[] = [];
 
   ngOnInit(): void {

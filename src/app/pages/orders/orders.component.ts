@@ -5,24 +5,24 @@ import { FilterTableComponent } from '../../components/filter-table/filter-table
 import { TEMPLATES } from '../../constants/constants';
 
 @Component({
-  selector: 'app-customers',
+  selector: 'app-orders',
   imports: [CommonModule, FilterTableComponent],
   providers: [HttpService],
-  templateUrl: './customers.component.html',
-  styleUrl: './customers.component.css'
+  templateUrl: './orders.component.html',
+  styleUrl: './orders.component.css'
 })
-export class CustomersComponent implements OnInit {
+export class OrdersComponent implements OnInit {
   private httpService = inject(HttpService);
-  columns: string[] = ['Nombre', 'Nit', 'Correo', 'Telefono'];
-  clientes: any[] = [];
+  columns: string[] = ['Estado', 'Precio', 'Fecha', 'Numero Factura'];
+  pedidos: any[] = [];
 
   ngOnInit(): void {
-    this.httpService.getItems(TEMPLATES.CUSTOMERS).then(response => {
-      this.clientes = response.data.map((p: any) => ({
-        nombre: p.nombre,
-        precio: p.nif,
-        categoria: p.email,
-        cantidad: p.telefono
+    this.httpService.getItems(TEMPLATES.ORDERS).then(response => {
+      this.pedidos = response.data.map((p: any) => ({
+        nombre: p.estado,
+        precio: p.precio_total,
+        categoria: p.fecha_de_pedido,
+        cantidad: p.numero_de_factura
       }));
     }).catch(error => {
       console.error('Error al cargar productos desde Totalum:', error);
